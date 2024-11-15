@@ -14,24 +14,16 @@ const WizardImage = styled.img`
   position: absolute;
   width: 100px;
   height: auto;
-  transition: transform 6s ease, scaleX 0.3s ease; 
-  pointer-events: none; 
+  transition: transform 6s ease; /* Smooth movement */
+  pointer-events: none; /* Prevent wizard from blocking clicks */
 `;
 
 function App() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [facingRight, setFacingRight] = useState(true); 
 
-  const handleClick = (event) => {
-    const newX = event.clientX - 50; 
-    const newY = event.clientY - 50; 
-
-    if (newX > position.x && !facingRight) {
-      setFacingRight(true); 
-    } else if (newX < position.x && facingRight) {
-      setFacingRight(false);
-    }
-
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const newX = event.clientX - 50; // Center wizard horizontally
+    const newY = event.clientY - 50; // Center wizard vertically
     setPosition({ x: newX, y: newY });
   };
 
@@ -41,7 +33,7 @@ function App() {
         src={`${process.env.PUBLIC_URL}/wiz.gif`} 
         alt="Wizard"
         style={{
-          transform: `translate(${position.x}px, ${position.y}px) scaleX(${facingRight ? 1 : -1})`, 
+          transform: `translate(${position.x}px, ${position.y}px)`, // Move wizard to the clicked position
         }}
       />
     </AppContainer>
